@@ -1,0 +1,254 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<link rel="stylesheet" id="jplayer-css" href="{{ asset('js/jplayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.css') }}" type="text/css"/>
+{% endblock %}
+{% block body %}
+	<style>
+		.form-search button {
+			height: 100%;
+			padding: 0.25rem;
+		}
+		.form-search svg {
+			height: 20px;
+		}
+
+		.product-category {
+			text-align: left;
+			color: #4d0a7a;
+			font-weight: bold;
+		}
+
+		.product-title {
+			width: fit-content;
+		}
+
+		.product-header {
+			width: fit-content;
+		}
+
+		.product-main-content {
+			display: flex;
+			flex-direction: row;
+			width: auto;
+			height: 500px;
+			justify-content: space-between;
+			gap: 4rem;
+		}
+
+		.product-main-content > img {
+			height: auto;
+			aspect-ratio: 1 / 1;
+			object-fit: cover;
+		}
+
+		.product-text-content {
+			flex-grow: 1;
+			width: auto;
+			display:flex;
+			flex-direction:column;
+			gap:0.5rem;
+		}
+
+
+		.article-detail-place .location,
+		.article-detail-price .country {
+			font-size: 2rem;
+		}
+		.article-detail-price .price {
+			font-size: 2rem;
+		}
+		.article-detail-shipping .price {
+			font-size: 2rem;
+		}
+		.article-detail-total {
+			font-size: 2rem;
+			margin-bottom: 0;
+		}
+
+	</style>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		header#header {
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			display: flex;
+			flex-direction: row;
+			padding: 0 10rem;
+			width: auto;
+			max-width: none;
+			height: 80px;
+			background-color: #EDDCCD;
+		}
+
+		header #logo {
+			width: auto;
+			height: 100%;
+		}
+
+		header #logo a {
+			width: auto;
+			height: 100%;
+			padding: 1rem;
+			
+			display: flex;
+			flex-direction: row;
+		}
+
+		header #logo a h1 {
+			width: auto;
+			height: 100%;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+  			white-space: nowrap;
+			color: #2E1559;
+		}
+
+		header #logo a img {
+			width: auto;
+			height: 100%;
+		}
+
+		nav {
+			justify-self: end;
+			display: flex !important;
+			justify-content: end !important;
+			gap: 1rem;
+			align-items: center;
+		}
+
+		ul.nav-menu {
+			display: flex !important;
+			flex-direction: row !important;
+			justify-content: right !important;
+			align-items: center !important;
+			gap: 1rem;
+		}
+
+		/* le logo panier */
+		nav .nav-menu li.page-item-2 a {
+			padding: 0;
+			height: 2rem;
+			width: auto;
+		}
+		nav .nav-menu li.page-item-2 a img {
+			padding: 0;
+			height: 100%;
+			width: auto !important;
+			transition: all 0.2s ease-in-out !important;
+		}
+		nav .nav-menu li.page-item-2 a:hover img {
+			transform: scale(1.2) !important;
+		}
+
+
+		form.form-search {
+			margin-bottom: 0;
+		}
+
+		a.accederAuPanier svg {
+			color: #555555;
+		}
+
+		.button {
+			text-align:center;
+		}
+	</style>
+	<header id="header">
+		<div id="logo">
+			<a href="./afficheRecherche">
+				<img src="./images/1-logo.svg"/>
+				<h1 class="site-title">e-Commerce</h1>
+			</a>
+		</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+				<span>
+					Menu
+				</span>
+			</button>
+			<div class="menu">
+				<ul class="nav-menu">
+					<li class="page_item page-item-1 current_page_item focus">
+						<form class="form-search" action="afficheRecherche">
+							<input type="text" placeholder="Recherche" name="search">
+							<button type="submit">
+								<style>
+									.form-search button {
+										height: 100%;
+										padding: 0.25rem;
+									}
+									.form-search svg {
+										height: 20px;
+									}
+								</style>
+								<svg width="auto" stroke-width="1.5" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</button>
+						</form>
+					</li>
+					<li class="page_item page-item-2">
+						<a href="accederAuPanier">
+							<img src="./images/cart.svg"/>
+						</a>
+						<p> 4 articles </p>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div id="content" class="site-content" tabindex="-1">
+		<div class="col-full">
+			<div id="primary">
+				<main id="main" class="site-main" role="main">
+					<header class="woocommerce-products-header product-header">
+						<h1 class="woocommerce-products-header__title page-title product-title">
+							{{ article.titre }}
+						</h1>
+						<h2 class="product-category">
+							{{ article.category }}
+						</h2>
+					</header>
+					<div class="product-main-content">
+						<img src={{ article.image }} alt={{ article.titre }}>
+						<div class="product-text-content">
+							<p class="article-detail-place">
+								<span>À récuperer à :</span>
+								<span class="location">Annonay,France</span>,
+								<span class="country">FR</span>
+							</p>
+							<p class="article-detail-price">
+								<span class="price">{{article.prix}}€</span>
+								-
+								<span>Neuf</span>
+							</p>
+							<p class="article-detail-shipping">
+								<span class="price">{{article.shippingPrice}}€</span>
+								-
+								<span>Worldwide</span>
+							</p>
+							<p class="article-detail-total">Total : {{article.prix + article.shippingPrice}}€</p>
+							<a href="ajouterAuPanier?id={{article.id}}" class="button product_type_simple add_to_cart_button">Ajouter au panier</a>
+							<a href="ajouterLigne?id={{article.id}}" class="button product_type_simple add_to_cart_button"> Payer immédiatement </a>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+		<!-- .col-full -->
+	</div>
+	<!-- #content -->
+{% endblock %}
+{% block javascripts %} <script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/jplayer/jquery.jplayer.min.js') }}"></script>
+	 <script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/add-on/jplayer.playlist.min.js') }}"></script>
+	 <script type="text/javascript" src="{{ asset('js/audio.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Panel d'administration</h1>
+        <ul class="list-group mt-4">
+            <li class="list-group-item">
+                <a href="{{ path('adminJeux') }}">Gérer les Jeux Vidéo</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ path('adminLivres') }}">Gérer les Livres</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ path('adminMusiques') }}">Gérer les Musiques</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

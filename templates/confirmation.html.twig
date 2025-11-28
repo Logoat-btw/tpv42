@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Merci ! Votre commande a été enregistrée.</h2>
+    <p>Commande n°{{ commande.id }} le {{ commande.date|date("d/m/Y H:i") }}</p>
+    <ul>
+        {% for article in commande.articles %}
+            <li>{{ article.quantite }} × {{ article.titre }} ({{ article.total }} €)</li>
+        {% endfor %}
+    </ul>
+    <strong>Total : {{ commande.total }} €</strong>
+{% endblock %}

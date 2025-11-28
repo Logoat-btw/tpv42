@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<link rel="stylesheet" id="jplayer-css" href="{{ asset('js/jplayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.css') }}" type="text/css"/>
+{% endblock %}
+{% block body %}
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		header#header {
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			display: flex;
+			flex-direction: row;
+			padding: 0 10rem;
+			width: auto;
+			max-width: none;
+			height: 80px;
+			background-color: #EDDCCD;
+		}
+
+		header #logo {
+			width: auto;
+			height: 100%;
+		}
+
+		header #logo a {
+			width: auto;
+			height: 100%;
+			padding: 1rem;
+			
+			display: flex;
+			flex-direction: row;
+		}
+
+		header #logo a h1 {
+			width: auto;
+			height: 100%;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+  			white-space: nowrap;
+			color: #2E1559;
+		}
+
+		header #logo a img {
+			width: auto;
+			height: 100%;
+		}
+
+		nav {
+			justify-self: end;
+			display: flex !important;
+			justify-content: end !important;
+			gap: 1rem;
+			align-items: center;
+		}
+
+		ul.nav-menu {
+			display: flex !important;
+			flex-direction: row !important;
+			justify-content: right !important;
+			align-items: center !important;
+			gap: 1rem;
+		}
+
+		/* le logo panier */
+		nav .nav-menu li.page-item-2 a {
+			padding: 0;
+			height: 2rem;
+			width: auto;
+		}
+		nav .nav-menu li.page-item-2 a img {
+			padding: 0;
+			height: 100%;
+			width: auto !important;
+			transition: all 0.2s ease-in-out !important;
+		}
+		nav .nav-menu li.page-item-2 a:hover img {
+			transform: scale(1.2) !important;
+		}
+
+
+
+
+		form.form-search {
+			margin-bottom: 0;
+		}
+
+		a.accederAuPanier svg {
+			color: #555555;
+		}
+
+		.button {
+			text-align:center;
+		}
+	</style>
+	<header id="header">
+		<div id="logo">
+			<a href="./afficheRecherche">
+				<img src="./images/1-logo.svg"/>
+				<h1 class="site-title">e-Commerce</h1>
+			</a>
+		</div>
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+				<span>
+					Menu
+				</span>
+			</button>
+			<div class="menu">
+				<ul class="nav-menu">
+					<li class="page_item page-item-1 current_page_item focus">
+						<form class="form-search" action="afficheRecherche">
+							<input type="text" placeholder="Recherche" name="search">
+							<button type="submit">
+								<style>
+									.form-search button {
+										height: 100%;
+										padding: 0.25rem;
+									}
+									.form-search svg {
+										height: 20px;
+									}
+								</style>
+								<svg width="auto" stroke-width="1.5" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</button>
+						</form>
+					</li>
+					<li class="page_item page-item-2">
+						<a href="accederAuPanier">
+							<img src="./images/cart.svg"/>
+						</a>
+						
+					</li>
+					<li class="page_item page-item-3">
+						<p>{{ nbArticles }} article{{ nbArticles > 1 ? 's' }}</p>
+					</li>
+					<li class="page_item page-item-4">
+						<a href="/admin/commandes">
+							Commandes passées
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div id="content" class="site-content" tabindex="-1">
+		<div class="col-full">
+			<div id="primary">
+				<main id="main" class="site-main" role="main">
+					<header class="woocommerce-products-header">
+						<h1 class="woocommerce-products-header__title page-title">
+							Résultats de la recherche
+						</h1>
+					</header>
+					<ul class="products">
+						{% for article in articles %}
+							{% if loop.index0 is divisible by(3) %}
+								<li class="product type-product first">
+								{% else %}
+									{% if loop.index is divisible by(3) %}
+										<li class="product type-product last">
+										{% else %}
+											<li class="product type-product">
+											{% endif %}
+										{% endif %}
+										<a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="article?id={{ article.id }}">
+											<img src="{{ asset(article.image) }}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="poster_2_up"/>
+											<h3>
+
+												{{ article.titre }}
+											</h3>
+											<span class="price">
+												<ins>
+													<span class="amount">
+														{{ article.prix }}
+														€
+													</span>
+												</ins>
+											</span>
+
+										</a>
+										<a href="ajouterAuPanier?id={{ article.id }}" class="button product_type_simple add_to_cart_button">
+											Ajouter au panier
+										</a>
+										<a href="article?id={{ article.id }}" class="button product_type_simple add_to_cart_button">
+											Voir plus
+										</a>
+										{% if article.pistes is defined %}
+											{% if article.pistes|length > 0 %}
+												<div id="jquery_jplayer_{{ article.id }}" class="jp-jplayer" data-idarticle="{{ article.id }}" data-pistes="{{ article.pistes|json_encode() }}"></div>
+												<div id="jp_container_{{ article.id }}" class="jp-audio" role="application">
+													<div class="jp-type-playlist">
+														<div class="jp-gui jp-interface">
+															<div class="jp-controls-holder">
+																<div class="jp-controls">
+																	<button class="jp-previous" role="button" tabindex="0">
+																		previous
+																	</button>
+																	<button class="jp-play" role="button" tabindex="0">
+																		play
+																	</button>
+																	<button class="jp-stop" role="button" tabindex="0">
+																		stop
+																	</button>
+																	<button class="jp-next" role="button" tabindex="0">
+																		next
+																	</button>
+																</div>
+															</div>
+														</div>
+														<div class="jp-playlist">
+															<ul></ul>
+														</div>
+														<div class="jp-no-solution">
+															<span>
+																Update Required
+															</span>
+															To play the media you will need to
+																																																																																																										either update your browser to a recent version or update your
+															<a href="http://get.adobe.com/flashplayer/" target="_blank">
+																Flash
+																																																																																																																	plugin
+															</a>
+															.
+														</div>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %}
+
+									</li>
+								{% endfor %}
+							</ul>
+						</main>
+					</div>
+				</div>
+				<!-- .col-full -->
+			</div>
+			<!-- #content -->
+		{% endblock %}
+		{% block javascripts %}
+			<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/jplayer/jquery.jplayer.min.js') }}"></script>
+			<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/add-on/jplayer.playlist.min.js') }}"></script>
+			<script type="text/javascript" src="{{ asset('js/audio.js') }}"></script>
+		{% endblock %}

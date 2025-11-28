@@ -1,0 +1,60 @@
+body {
+    background-color: skyblue;
+}
+
+.main-navigation {
+    background-color: aqua;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header#header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10rem;
+    width: auto;
+    max-width: none;
+    height: 80px;
+    background-color: #EDDCCD;
+}
+
+header #logo {
+    width: auto;
+    height: 100%;
+}
+
+header #logo a {
+    width: auto;
+    height: 100%;
+    padding: 1rem;
+    
+    display: flex;
+    flex-direction: row;
+}
+
+header #logo a h1 {
+    width: auto;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+      white-space: nowrap;
+    color: #2E1559;
+}
+
+header #logo a img {
+    width: auto;
+    height: 100%;
+}
+
+nav {
+    justify-self: end;
+}

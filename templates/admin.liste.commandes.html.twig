@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des commandes{% endblock %}
+
+{% block body %}
+    <h2>Liste des commandes</h2>
+
+    {% if commandes is empty %}
+        <p>Aucune commande enregistrée.</p>
+    {% else %}
+        {% for commande in commandes %}
+            <div style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc;">
+                <p><strong>Commande n°{{ commande.id }}</strong> le {{ commande.date|date("d/m/Y H:i") }}</p>
+
+                <p>
+                    <strong>Adresse :</strong> {{ commande.adresse }}, {{ commande.codePostal }} {{ commande.ville }}, {{ commande.pays }}<br>
+                    <strong>Téléphone :</strong> {{ commande.telephone }}<br>
+                    <strong>Moyen de paiement :</strong> {{ commande.paiement }}
+                </p>
+
+                <p><strong>Articles :</strong></p>
+                <ul>
+                    {% for article in commande.articles %}
+                        <li>{{ article.quantite }} × {{ article.titre }} ({{ article.total }} €)</li>
+                    {% endfor %}
+                </ul>
+
+                <p><strong>Total :</strong> {{ commande.total }} €</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
